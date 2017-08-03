@@ -130,7 +130,11 @@ function ApiCache() {
     }
 
     // add cache control headers
-    res.header('cache-control', 'max-age=' + (duration / 1000).toFixed(0))
+    if(!globalOptions.cacheControl) {
+      res.header('cache-control', 'max-age=' + (duration / 1000).toFixed(0))
+    } else {
+      res.header('cache-control', globalOptions.cacheControl)
+    }
 
     // patch res.write
     res.write = function(content) {
